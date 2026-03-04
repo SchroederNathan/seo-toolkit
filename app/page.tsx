@@ -94,6 +94,20 @@ export default function Home() {
             </TabPanel>
           </TabPanels>
         </TabGroup>
+
+        <HLine />
+
+        <footer className="py-4 text-center text-xs text-brand-10">
+          © {new Date().getFullYear()} Made by{" "}
+          <a
+            href="https://nathanschroeder.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand-11 hover:text-brand-12 transition-colors"
+          >
+            Nathan
+          </a>
+        </footer>
       </div>
     </div>
   );
