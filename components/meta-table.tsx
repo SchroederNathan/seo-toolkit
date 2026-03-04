@@ -45,7 +45,7 @@ export function MetaTable({ data }: { data: OGData }) {
       <TableBody>
         {entries.map(([key, value]) => (
           <TableRow key={key}>
-            <TableCell className="font-mono text-xs text-zinc-400">
+            <TableCell className="font-mono text-xs text-brand-11">
               {key}
             </TableCell>
             <TableCell className="max-w-[300px] truncate">{value}</TableCell>

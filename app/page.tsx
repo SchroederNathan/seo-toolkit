@@ -16,11 +16,11 @@ function GridLines() {
   return (
     <>
       <div
-        className="pointer-events-none absolute left-0 top-0 w-0 border-l border-white/[0.06]"
+        className="pointer-events-none absolute left-0 top-0 w-0 border-l border-brand-3"
         style={{ height: 4000, marginTop: -2000 }}
       />
       <div
-        className="pointer-events-none absolute right-0 top-0 w-0 border-l border-white/[0.06]"
+        className="pointer-events-none absolute right-0 top-0 w-0 border-l border-brand-3"
         style={{ height: 4000, marginTop: -2000 }}
       />
     </>
@@ -31,7 +31,7 @@ function GridLines() {
 function HLine({ className }: { className?: string }) {
   return (
     <div
-      className={clsx("pointer-events-none absolute left-0 h-0 border-t border-white/[0.06]", className)}
+      className={clsx("pointer-events-none absolute left-0 h-0 border-t border-brand-3", className)}
       style={{ width: 4000, marginLeft: -2000 }}
     />
   );
@@ -47,14 +47,14 @@ export default function Home() {
         <header className="relative py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-indigo-600 text-xs font-bold">
+              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-brand-8 text-xs font-bold">
                 S
               </div>
-              <span className="text-sm font-semibold tracking-tight text-white">
+              <span className="text-sm font-semibold tracking-tight text-brand-12">
                 SEO Toolkit
               </span>
             </div>
-            <span className="text-xs text-zinc-500">
+            <span className="text-xs text-brand-10">
               OG Preview & Favicon Generator
             </span>
           </div>
@@ -71,8 +71,8 @@ export default function Home() {
                   key={tab.name}
                   className={clsx(
                     "flex items-center gap-1.5 border-b-2 px-4 py-3 text-sm font-medium outline-none transition",
-                    "border-transparent text-zinc-500 hover:text-zinc-300",
-                    "data-selected:border-indigo-500 data-selected:text-white"
+                    "border-transparent text-brand-10 hover:text-brand-11",
+                    "data-selected:border-brand-9 data-selected:text-brand-12"
                   )}
                 >
                   <tab.icon className="h-4 w-4" />

@@ -116,19 +116,19 @@ export function FaviconGen() {
     <div className="space-y-6">
       <section className="p-0">
         <div className="mb-4 flex items-center gap-2">
-          <ImageIcon className="h-5 w-5 text-zinc-400" />
+          <ImageIcon className="h-5 w-5 text-brand-11" />
           <Subheading level={2}>Favicon Source</Subheading>
         </div>
 
         <TabGroup selectedIndex={modeIndex} onChange={handleModeChange}>
-          <TabList className="flex gap-1 rounded-lg bg-white/5 p-1 w-fit">
+          <TabList className="flex gap-1 rounded-lg bg-brand-2 p-1 w-fit">
             {modeTabs.map((tab) => (
               <Tab
                 key={tab.name}
                 className={clsx(
                   "flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium outline-none transition",
-                  "text-zinc-400 hover:text-white",
-                  "data-selected:bg-white/10 data-selected:text-white"
+                  "text-brand-11 hover:text-brand-12",
+                  "data-selected:bg-brand-3 data-selected:text-brand-12"
                 )}
               >
                 <tab.icon className="h-3.5 w-3.5" />
@@ -146,7 +146,7 @@ export function FaviconGen() {
                   type="file"
                   accept="image/*"
                   onChange={handleFileChange}
-                  className="mt-2 block w-full text-sm text-zinc-400 file:mr-4 file:rounded-lg file:border-0 file:bg-white/10 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-white/20"
+                  className="mt-2 block w-full text-sm text-brand-11 file:mr-4 file:rounded-lg file:border-0 file:bg-brand-3 file:px-4 file:py-2 file:text-sm file:font-medium file:text-brand-12 hover:file:bg-white/20"
                 />
               </Field>
               {imageUrl && (
@@ -155,7 +155,7 @@ export function FaviconGen() {
                   <img
                     src={imageUrl}
                     alt="Preview"
-                    className="h-16 w-16 rounded-lg border border-white/10 object-cover"
+                    className="h-16 w-16 rounded-lg border border-brand-3 object-cover"
                   />
                   <Button
                     onClick={handleGenerateFromImage}
@@ -189,7 +189,7 @@ export function FaviconGen() {
                       type="color"
                       value={emojiBg}
                       onChange={(e) => setEmojiBg(e.target.value)}
-                      className="h-9 w-12 cursor-pointer rounded border border-white/10 bg-transparent p-1"
+                      className="h-9 w-12 cursor-pointer rounded border border-brand-3 bg-transparent p-1"
                     />
                     <div className="flex-1">
                       <Input
@@ -207,7 +207,7 @@ export function FaviconGen() {
                       type="color"
                       value={emojiFg}
                       onChange={(e) => setEmojiFg(e.target.value)}
-                      className="h-9 w-12 cursor-pointer rounded border border-white/10 bg-transparent p-1"
+                      className="h-9 w-12 cursor-pointer rounded border border-brand-3 bg-transparent p-1"
                     />
                     <div className="flex-1">
                       <Input
@@ -229,7 +229,7 @@ export function FaviconGen() {
                     type="color"
                     value={solidColor}
                     onChange={(e) => setSolidColor(e.target.value)}
-                    className="h-9 w-12 cursor-pointer rounded border border-white/10 bg-transparent p-1"
+                    className="h-9 w-12 cursor-pointer rounded border border-brand-3 bg-transparent p-1"
                   />
                   <div className="max-w-[200px]">
                     <Input
@@ -258,7 +258,7 @@ export function FaviconGen() {
 
       {generating && (
         <div className="flex items-center justify-center py-8">
-          <Loader2 className="h-8 w-8 animate-spin text-zinc-500" />
+          <Loader2 className="h-8 w-8 animate-spin text-brand-10" />
         </div>
       )}
 

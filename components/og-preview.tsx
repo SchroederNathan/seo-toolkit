@@ -73,7 +73,7 @@ export function OGPreview() {
       {/* URL Input Section */}
       <section className="p-0">
         <div className="mb-4 flex items-center gap-2">
-          <Globe className="h-5 w-5 text-zinc-400" />
+          <Globe className="h-5 w-5 text-brand-11" />
           <Subheading level={2}>Enter a URL to preview</Subheading>
         </div>
         <form onSubmit={handleSubmit} className="flex gap-2">
@@ -116,7 +116,7 @@ export function OGPreview() {
       {/* Loading */}
       {loading && (
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-zinc-500" />
+          <Loader2 className="h-8 w-8 animate-spin text-brand-10" />
         </div>
       )}
 
@@ -127,14 +127,14 @@ export function OGPreview() {
           <section className="p-0">
             <Subheading level={2} className="mb-4">Platform Previews</Subheading>
             <TabGroup>
-              <TabList className="flex gap-1 rounded-lg bg-white/5 p-1 w-fit">
+              <TabList className="flex gap-1 rounded-lg bg-brand-2 p-1 w-fit">
                 {platformTabs.map((name) => (
                   <Tab
                     key={name}
                     className={clsx(
                       "rounded-md px-3 py-1.5 text-sm font-medium outline-none transition",
-                      "text-zinc-400 hover:text-white",
-                      "data-selected:bg-white/10 data-selected:text-white"
+                      "text-brand-11 hover:text-brand-12",
+                      "data-selected:bg-brand-3 data-selected:text-brand-12"
                     )}
                   >
                     {name}

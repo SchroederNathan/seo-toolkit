@@ -26,7 +26,7 @@ export function FaviconPreview({ favicons }: { favicons: FaviconSize[] }) {
       {favicons.map((favicon) => (
         <div
           key={favicon.size}
-          className="flex flex-col items-center gap-2 rounded-lg border border-white/10 bg-white/2.5 p-3"
+          className="flex flex-col items-center gap-2 rounded-lg border border-brand-3 bg-brand-2 p-3"
         >
           <div className="flex h-20 w-20 items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -38,7 +38,7 @@ export function FaviconPreview({ favicons }: { favicons: FaviconSize[] }) {
               style={{ imageRendering: "pixelated" }}
             />
           </div>
-          <span className="text-xs text-zinc-400">
+          <span className="text-xs text-brand-11">
             {favicon.size}×{favicon.size}
           </span>
           <Button
