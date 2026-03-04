@@ -11,12 +11,46 @@ const tabs = [
   { name: "Favicon Generator", icon: ImageIcon },
 ];
 
+/**
+ * Infinite border lines that extend way beyond the container.
+ * Placed on the content column edges so they run through header, tabs, content, everything.
+ */
+function GridLines() {
+  return (
+    <>
+      {/* Left vertical line */}
+      <div
+        className="pointer-events-none absolute left-0 top-0 w-0 border-l border-white/[0.06]"
+        style={{ height: 4000, marginTop: -2000 }}
+      />
+      {/* Right vertical line */}
+      <div
+        className="pointer-events-none absolute right-0 top-0 w-0 border-l border-white/[0.06]"
+        style={{ height: 4000, marginTop: -2000 }}
+      />
+    </>
+  );
+}
+
+/** Full-width horizontal border that bleeds past the container */
+function HLine() {
+  return (
+    <div
+      className="pointer-events-none absolute left-0 right-0 h-0 border-t border-white/[0.06]"
+      style={{ width: 4000, marginLeft: -2000 }}
+    />
+  );
+}
+
 export default function Home() {
   return (
-    <div className="min-h-screen">
-      {/* Header — full-width border lines, content centered */}
-      <header className="border-b border-white/[0.08]">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+    <div className="min-h-screen overflow-x-hidden">
+      {/* Content column — relative so GridLines attach here */}
+      <div className="relative mx-auto max-w-5xl px-6">
+        <GridLines />
+
+        {/* Header */}
+        <header className="relative flex items-center justify-between py-4">
           <div className="flex items-center gap-2.5">
             <div className="flex h-7 w-7 items-center justify-center rounded-md bg-indigo-600 text-xs font-bold">
               S
@@ -28,13 +62,14 @@ export default function Home() {
           <span className="text-xs text-zinc-500">
             OG Preview & Favicon Generator
           </span>
-        </div>
-      </header>
+          {/* Bottom border — extends full screen width */}
+          <HLine />
+          <div className="absolute bottom-0 left-0 right-0" />
+        </header>
 
-      <TabGroup>
-        {/* Tab bar — full-width border line */}
-        <div className="border-b border-white/[0.08]">
-          <div className="mx-auto max-w-5xl px-6">
+        <TabGroup>
+          {/* Tab bar */}
+          <div className="relative">
             <TabList className="-mb-px flex gap-0">
               {tabs.map((tab) => (
                 <Tab
@@ -50,26 +85,23 @@ export default function Home() {
                 </Tab>
               ))}
             </TabList>
+            {/* Bottom border of tab bar — full width */}
+            <div className="absolute bottom-0">
+              <HLine />
+            </div>
           </div>
-        </div>
 
-        {/* Main content area — bordered sides that frame the content column */}
-        <div className="relative">
-          {/* Vertical side borders extending full height */}
-          <div className="pointer-events-none absolute inset-0 mx-auto max-w-5xl border-x border-white/[0.06]" />
-
-          <div className="mx-auto max-w-5xl px-6 py-8">
-            <TabPanels>
-              <TabPanel>
-                <OGPreview />
-              </TabPanel>
-              <TabPanel>
-                <FaviconGen />
-              </TabPanel>
-            </TabPanels>
-          </div>
-        </div>
-      </TabGroup>
+          {/* Content */}
+          <TabPanels className="py-8">
+            <TabPanel>
+              <OGPreview />
+            </TabPanel>
+            <TabPanel>
+              <FaviconGen />
+            </TabPanel>
+          </TabPanels>
+        </TabGroup>
+      </div>
     </div>
   );
 }
