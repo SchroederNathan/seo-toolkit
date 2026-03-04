@@ -22,14 +22,14 @@ export function CodeSnippets({ appName }: { appName: string }) {
 
   return (
     <TabGroup>
-      <TabList className="grid w-fit grid-cols-2 gap-px bg-white/[0.06]">
+      <TabList className="flex gap-1 rounded-lg bg-white/5 p-1 w-fit">
         {["HTML Snippet", "manifest.json"].map((name) => (
           <Tab
             key={name}
             className={clsx(
-              "bg-zinc-950 px-3 py-1.5 text-sm font-medium outline-none transition",
-              "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900",
-              "data-selected:bg-zinc-900 data-selected:text-white"
+              "rounded-md px-3 py-1.5 text-sm font-medium outline-none transition",
+              "text-zinc-400 hover:text-white",
+              "data-selected:bg-white/10 data-selected:text-white"
             )}
           >
             {name}
@@ -49,7 +49,7 @@ export function CodeSnippets({ appName }: { appName: string }) {
               <Copy className="h-3.5 w-3.5" />
             )}
           </Button>
-          <pre className="overflow-x-auto border border-white/[0.06] bg-zinc-900/50 p-4 text-xs text-zinc-300">
+          <pre className="overflow-x-auto rounded-lg border border-white/10 bg-zinc-900 p-4 text-xs text-zinc-300">
             <code>{htmlSnippet}</code>
           </pre>
         </TabPanel>
@@ -65,7 +65,7 @@ export function CodeSnippets({ appName }: { appName: string }) {
               <Copy className="h-3.5 w-3.5" />
             )}
           </Button>
-          <pre className="overflow-x-auto border border-white/[0.06] bg-zinc-900/50 p-4 text-xs text-zinc-300">
+          <pre className="overflow-x-auto rounded-lg border border-white/10 bg-zinc-900 p-4 text-xs text-zinc-300">
             <code>{manifestJson}</code>
           </pre>
         </TabPanel>

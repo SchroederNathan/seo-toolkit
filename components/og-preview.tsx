@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Subheading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
+import { Divider } from "@/components/ui/divider";
 import { TwitterCard } from "@/components/twitter-card";
 import { FacebookCard } from "@/components/facebook-card";
 import { LinkedInCard } from "@/components/linkedin-card";
@@ -69,11 +70,11 @@ export function OGPreview() {
   );
 
   return (
-    <div className="grid grid-cols-1 gap-px bg-white/[0.06]">
+    <div className="space-y-6">
       {/* URL Input Section */}
-      <section className="bg-zinc-950 p-6 sm:p-8">
+      <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
         <div className="mb-4 flex items-center gap-2">
-          <Globe className="h-4 w-4 text-zinc-500" />
+          <Globe className="h-5 w-5 text-zinc-400" />
           <Subheading level={2}>Enter a URL to preview</Subheading>
         </div>
         <form onSubmit={handleSubmit} className="flex gap-2">
@@ -95,7 +96,7 @@ export function OGPreview() {
           </Button>
         </form>
         <div className="mt-3 flex flex-wrap items-center gap-2">
-          <Text className="text-xs text-zinc-500">Try:</Text>
+          <Text className="text-sm">Try:</Text>
           {EXAMPLE_URLS.map((ex) => (
             <button key={ex} onClick={() => handleExample(ex)}>
               <Badge color="zinc" className="cursor-pointer">
@@ -108,55 +109,54 @@ export function OGPreview() {
 
       {/* Error */}
       {error && (
-        <section className="bg-red-500/[0.05] p-4 sm:px-8">
+        <section className="rounded-lg border border-red-500/30 bg-red-500/10 p-4">
           <Text className="text-sm text-red-400">{error}</Text>
         </section>
       )}
 
       {/* Loading */}
       {loading && (
-        <div className="flex items-center justify-center bg-zinc-950 py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-zinc-600" />
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-zinc-500" />
         </div>
       )}
 
       {/* Results */}
       {data && (
-        <>
+        <div className="space-y-6">
           {/* Platform Previews */}
-          <section className="bg-zinc-950 p-6 sm:p-8">
+          <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
             <Subheading level={2} className="mb-4">Platform Previews</Subheading>
             <TabGroup>
-              <TabList className="mb-4 grid w-fit grid-cols-4 gap-px bg-white/[0.06]">
+              <TabList className="flex gap-1 rounded-lg bg-white/5 p-1 w-fit">
                 {platformTabs.map((name) => (
                   <Tab
                     key={name}
                     className={clsx(
-                      "bg-zinc-950 px-3 py-1.5 text-sm font-medium outline-none transition",
-                      "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900",
-                      "data-selected:bg-zinc-900 data-selected:text-white"
+                      "rounded-md px-3 py-1.5 text-sm font-medium outline-none transition",
+                      "text-zinc-400 hover:text-white",
+                      "data-selected:bg-white/10 data-selected:text-white"
                     )}
                   >
                     {name}
                   </Tab>
                 ))}
               </TabList>
-              <TabPanels>
-                {/* All platforms — 3-column grid */}
-                <TabPanel>
-                  <div className="grid gap-px bg-white/[0.06] sm:grid-cols-3">
-                    <div className="bg-zinc-950 p-4">
-                      <Text className="mb-2 text-xs uppercase tracking-wider text-zinc-500">Twitter / X</Text>
-                      <TwitterCard data={data} />
-                    </div>
-                    <div className="bg-zinc-950 p-4">
-                      <Text className="mb-2 text-xs uppercase tracking-wider text-zinc-500">Facebook</Text>
-                      <FacebookCard data={data} />
-                    </div>
-                    <div className="bg-zinc-950 p-4">
-                      <Text className="mb-2 text-xs uppercase tracking-wider text-zinc-500">LinkedIn</Text>
-                      <LinkedInCard data={data} />
-                    </div>
+              <TabPanels className="mt-4">
+                <TabPanel className="space-y-6">
+                  <div>
+                    <Text className="mb-2 text-sm">Twitter / X</Text>
+                    <TwitterCard data={data} />
+                  </div>
+                  <Divider soft />
+                  <div>
+                    <Text className="mb-2 text-sm">Facebook</Text>
+                    <FacebookCard data={data} />
+                  </div>
+                  <Divider soft />
+                  <div>
+                    <Text className="mb-2 text-sm">LinkedIn</Text>
+                    <LinkedInCard data={data} />
                   </div>
                 </TabPanel>
                 <TabPanel>
@@ -172,18 +172,18 @@ export function OGPreview() {
             </TabGroup>
           </section>
 
-          {/* Audit + Meta — 2-column grid */}
-          <div className="grid gap-px bg-white/[0.06] sm:grid-cols-2">
-            <section className="bg-zinc-950 p-6 sm:p-8">
-              <Subheading level={2} className="mb-4">OG Audit Score</Subheading>
-              <AuditScore data={data} />
-            </section>
-            <section className="bg-zinc-950 p-6 sm:p-8">
-              <Subheading level={2} className="mb-4">Raw Meta Tags</Subheading>
-              <MetaTable data={data} />
-            </section>
-          </div>
-        </>
+          {/* Audit Score */}
+          <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
+            <Subheading level={2} className="mb-4">OG Audit Score</Subheading>
+            <AuditScore data={data} />
+          </section>
+
+          {/* Raw Meta Tags */}
+          <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
+            <Subheading level={2} className="mb-4">Raw Meta Tags</Subheading>
+            <MetaTable data={data} />
+          </section>
+        </div>
       )}
     </div>
   );
