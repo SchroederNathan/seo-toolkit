@@ -114,7 +114,7 @@ export function FaviconGen() {
         </div>
 
         <TabGroup selectedIndex={modeIndex} onChange={handleModeChange}>
-          <TabList className="flex gap-1 rounded-lg bg-brand-2 p-1 w-fit">
+          <TabList className="flex gap-1 rounded-md bg-brand-2 p-1 w-fit">
             {modeTabs.map((tab) => (
               <Tab
                 key={tab.name}
@@ -139,15 +139,15 @@ export function FaviconGen() {
                   type="file"
                   accept="image/*"
                   onChange={handleFileChange}
-                  className="mt-2 block w-full text-sm text-brand-11 file:mr-4 file:rounded-lg file:border-0 file:bg-brand-3 file:px-4 file:py-2 file:text-sm file:font-medium file:text-brand-12 hover:file:bg-white/20"
+                  className="mt-2 block w-full text-sm text-brand-11 file:mr-4 file:rounded-md file:border-0 file:bg-brand-3 file:px-4 file:py-2 file:text-sm file:font-medium file:text-brand-12 hover:file:bg-white/20"
                 />
               </Field>
               {imageUrl && (
                 <div className="flex items-center gap-4">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={imageUrl} alt="Preview" className="h-16 w-16 rounded-lg border border-brand-3 object-cover" />
+                  <img src={imageUrl} alt="Preview" className="h-16 w-16 rounded-md border border-brand-3 object-cover" />
                   <Button onClick={handleGenerateFromImage} disabled={generating} color="indigo">
-                    {generating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                    {generating ? <Loader2 data-slot="icon" className="h-4 w-4 animate-spin" /> : null}
                     Generate Favicons
                   </Button>
                 </div>
@@ -219,7 +219,7 @@ export function FaviconGen() {
             <div className="mb-4 flex items-center justify-between">
               <Subheading level={2}>Preview</Subheading>
               <Button onClick={handleDownloadZip} outline>
-                <Download className="mr-2 h-4 w-4" />
+                <Download data-slot="icon" className="h-4 w-4" />
                 Download ZIP
               </Button>
             </div>

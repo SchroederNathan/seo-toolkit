@@ -81,9 +81,9 @@ export function OGPreview() {
           </div>
           <Button type="submit" disabled={loading || !url.trim()} color="indigo">
             {loading ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <Loader2 data-slot="icon" className="h-4 w-4 animate-spin" />
             ) : (
-              <Search className="mr-2 h-4 w-4" />
+              <Search data-slot="icon" className="h-4 w-4" />
             )}
             Analyze
           </Button>
@@ -103,7 +103,7 @@ export function OGPreview() {
         <>
           <HLine />
           <section className="py-6">
-            <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4">
+            <div className="rounded-md border border-red-500/30 bg-red-500/10 p-4">
               <Text className="text-sm text-red-400">{error}</Text>
             </div>
           </section>
@@ -125,7 +125,7 @@ export function OGPreview() {
           <section className="py-6">
             <Subheading level={2} className="mb-4">Platform Previews</Subheading>
             <TabGroup>
-              <TabList className="flex gap-1 rounded-lg bg-brand-2 p-1 w-fit">
+              <TabList className="flex gap-1 rounded-md bg-brand-2 p-1 w-fit">
                 {platformTabs.map((name) => (
                   <Tab
                     key={name}

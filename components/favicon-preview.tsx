@@ -19,14 +19,14 @@ export function FaviconPreview({ favicons }: { favicons: FaviconSize[] }) {
   return (
     <div className="space-y-4">
       <Button outline className="w-full" onClick={handleDownloadIco}>
-        <FileIcon className="mr-1.5 h-4 w-4" />
+        <FileIcon data-slot="icon" className="h-4 w-4" />
         Download favicon.ico
       </Button>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
       {favicons.map((favicon) => (
         <div
           key={favicon.size}
-          className="flex flex-col items-center gap-2 rounded-lg border border-brand-3 bg-brand-2 p-3"
+          className="flex flex-col items-center gap-2 rounded-md border border-brand-3 bg-brand-2 p-3"
         >
           <div className="flex h-20 w-20 items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -46,7 +46,7 @@ export function FaviconPreview({ favicons }: { favicons: FaviconSize[] }) {
             className="text-xs"
             onClick={() => handleDownload(favicon)}
           >
-            <Download className="mr-1 h-3 w-3" />
+            <Download data-slot="icon" className="h-3.5 w-3.5" />
             PNG
           </Button>
         </div>

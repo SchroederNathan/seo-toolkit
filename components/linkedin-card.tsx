@@ -15,7 +15,7 @@ export function LinkedInCard({ data }: { data: OGData }) {
   })();
 
   return (
-    <div className="max-w-[504px] overflow-hidden rounded-lg border border-[#38434f] bg-[#1b1f23]">
+    <div className="max-w-[504px] overflow-hidden rounded-md border border-[#38434f] bg-[#1b1f23]">
       {image && (
         <div className="aspect-[1.91/1] w-full bg-muted">
           {/* eslint-disable-next-line @next/next/no-img-element */}

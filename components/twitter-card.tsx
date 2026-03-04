@@ -19,7 +19,7 @@ export function TwitterCard({ data }: { data: OGData }) {
 
   if (isLargeCard) {
     return (
-      <div className="max-w-[504px] overflow-hidden rounded-2xl border border-[#2f3336]">
+      <div className="max-w-[504px] overflow-hidden rounded-lg border border-[#2f3336]">
         {image && (
           <div className="aspect-[2/1] w-full bg-muted">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -42,7 +42,7 @@ export function TwitterCard({ data }: { data: OGData }) {
   }
 
   return (
-    <div className="flex max-w-[504px] overflow-hidden rounded-2xl border border-[#2f3336]">
+    <div className="flex max-w-[504px] overflow-hidden rounded-lg border border-[#2f3336]">
       {image && (
         <div className="h-[128px] w-[128px] shrink-0 bg-muted">
           {/* eslint-disable-next-line @next/next/no-img-element */}
