@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/react";
+import clsx from "clsx";
 import type { FaviconSize } from "@/lib/og-types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Separator } from "@/components/ui/separator";
+import { Field, Label } from "@/components/ui/fieldset";
+import { Subheading } from "@/components/ui/heading";
+import { Divider } from "@/components/ui/divider";
 import { FaviconPreview } from "@/components/favicon-preview";
 import { CodeSnippets } from "@/components/code-snippets";
 import {
@@ -19,28 +20,31 @@ import {
 } from "@/lib/favicon-utils";
 import { Upload, Type, Palette, Download, Loader2, ImageIcon } from "lucide-react";
 
+const modeTabs = [
+  { name: "Upload", icon: Upload },
+  { name: "Emoji/Text", icon: Type },
+  { name: "Color", icon: Palette },
+];
+
 export function FaviconGen() {
-  const [mode, setMode] = useState("emoji");
+  const [modeIndex, setModeIndex] = useState(1);
   const [favicons, setFavicons] = useState<FaviconSize[]>([]);
   const [appName, setAppName] = useState("My App");
   const [generating, setGenerating] = useState(false);
 
-  // Emoji/Text mode
   const [emojiText, setEmojiText] = useState("🚀");
   const [emojiBg, setEmojiBg] = useState("#1e1e2e");
   const [emojiFg, setEmojiFg] = useState("#ffffff");
 
-  // Color mode
   const [solidColor, setSolidColor] = useState("#6366f1");
 
-  // Upload mode
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Debounce timer ref
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
 
-  // Auto-generate for emoji and color modes
+  const mode = modeIndex === 0 ? "upload" : modeIndex === 1 ? "emoji" : "color";
+
   useEffect(() => {
     if (mode === "emoji" && emojiText.trim()) {
       if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -81,7 +85,6 @@ export function FaviconGen() {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (!file) return;
-
       const url = URL.createObjectURL(file);
       setImageUrl(url);
     },
@@ -105,58 +108,60 @@ export function FaviconGen() {
     downloadBlob(zip, "favicons.zip");
   }, [favicons, appName]);
 
-  const handleModeChange = useCallback((value: string) => {
-    setMode(value);
+  const handleModeChange = useCallback((index: number) => {
+    setModeIndex(index);
     setFavicons([]);
   }, []);
 
   return (
     <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <ImageIcon className="h-5 w-5" />
-            Favicon Source
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Tabs value={mode} onValueChange={handleModeChange}>
-            <TabsList>
-              <TabsTrigger value="upload">
-                <Upload className="mr-1.5 h-3.5 w-3.5" />
-                Upload
-              </TabsTrigger>
-              <TabsTrigger value="emoji">
-                <Type className="mr-1.5 h-3.5 w-3.5" />
-                Emoji/Text
-              </TabsTrigger>
-              <TabsTrigger value="color">
-                <Palette className="mr-1.5 h-3.5 w-3.5" />
-                Color
-              </TabsTrigger>
-            </TabsList>
+      <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
+        <div className="mb-4 flex items-center gap-2">
+          <ImageIcon className="h-5 w-5 text-zinc-400" />
+          <Subheading level={2}>Favicon Source</Subheading>
+        </div>
 
-            <TabsContent value="upload" className="mt-4 space-y-4">
-              <div className="space-y-2">
+        <TabGroup selectedIndex={modeIndex} onChange={handleModeChange}>
+          <TabList className="flex gap-1 rounded-lg bg-white/5 p-1 w-fit">
+            {modeTabs.map((tab) => (
+              <Tab
+                key={tab.name}
+                className={clsx(
+                  "flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium outline-none transition",
+                  "text-zinc-400 hover:text-white",
+                  "data-selected:bg-white/10 data-selected:text-white"
+                )}
+              >
+                <tab.icon className="h-3.5 w-3.5" />
+                {tab.name}
+              </Tab>
+            ))}
+          </TabList>
+
+          <TabPanels className="mt-4">
+            <TabPanel className="space-y-4">
+              <Field>
                 <Label>Select an image file</Label>
-                <Input
+                <input
                   ref={fileInputRef}
                   type="file"
                   accept="image/*"
                   onChange={handleFileChange}
+                  className="mt-2 block w-full text-sm text-zinc-400 file:mr-4 file:rounded-lg file:border-0 file:bg-white/10 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-white/20"
                 />
-              </div>
+              </Field>
               {imageUrl && (
                 <div className="flex items-center gap-4">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={imageUrl}
                     alt="Preview"
-                    className="h-16 w-16 rounded-lg border object-cover"
+                    className="h-16 w-16 rounded-lg border border-white/10 object-cover"
                   />
                   <Button
                     onClick={handleGenerateFromImage}
                     disabled={generating}
+                    color="indigo"
                   >
                     {generating ? (
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -165,11 +170,11 @@ export function FaviconGen() {
                   </Button>
                 </div>
               )}
-            </TabsContent>
+            </TabPanel>
 
-            <TabsContent value="emoji" className="mt-4 space-y-4">
+            <TabPanel className="space-y-4">
               <div className="grid gap-4 sm:grid-cols-3">
-                <div className="space-y-2">
+                <Field>
                   <Label>Emoji or Text</Label>
                   <Input
                     value={emojiText}
@@ -177,109 +182,106 @@ export function FaviconGen() {
                     placeholder="🚀"
                     maxLength={4}
                   />
-                </div>
-                <div className="space-y-2">
+                </Field>
+                <Field>
                   <Label>Background</Label>
-                  <div className="flex gap-2">
-                    <Input
+                  <div className="mt-2 flex gap-2">
+                    <input
                       type="color"
                       value={emojiBg}
                       onChange={(e) => setEmojiBg(e.target.value)}
-                      className="h-9 w-12 cursor-pointer p-1"
+                      className="h-9 w-12 cursor-pointer rounded border border-white/10 bg-transparent p-1"
                     />
-                    <Input
-                      value={emojiBg}
-                      onChange={(e) => setEmojiBg(e.target.value)}
-                      className="flex-1 font-mono text-sm"
-                    />
+                    <div className="flex-1">
+                      <Input
+                        value={emojiBg}
+                        onChange={(e) => setEmojiBg(e.target.value)}
+                        className="font-mono text-sm"
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="space-y-2">
+                </Field>
+                <Field>
                   <Label>Text Color</Label>
-                  <div className="flex gap-2">
-                    <Input
+                  <div className="mt-2 flex gap-2">
+                    <input
                       type="color"
                       value={emojiFg}
                       onChange={(e) => setEmojiFg(e.target.value)}
-                      className="h-9 w-12 cursor-pointer p-1"
+                      className="h-9 w-12 cursor-pointer rounded border border-white/10 bg-transparent p-1"
                     />
-                    <Input
-                      value={emojiFg}
-                      onChange={(e) => setEmojiFg(e.target.value)}
-                      className="flex-1 font-mono text-sm"
-                    />
+                    <div className="flex-1">
+                      <Input
+                        value={emojiFg}
+                        onChange={(e) => setEmojiFg(e.target.value)}
+                        className="font-mono text-sm"
+                      />
+                    </div>
                   </div>
-                </div>
+                </Field>
               </div>
-            </TabsContent>
+            </TabPanel>
 
-            <TabsContent value="color" className="mt-4 space-y-4">
-              <div className="space-y-2">
+            <TabPanel className="space-y-4">
+              <Field>
                 <Label>Solid Color</Label>
-                <div className="flex gap-2">
-                  <Input
+                <div className="mt-2 flex gap-2">
+                  <input
                     type="color"
                     value={solidColor}
                     onChange={(e) => setSolidColor(e.target.value)}
-                    className="h-9 w-12 cursor-pointer p-1"
+                    className="h-9 w-12 cursor-pointer rounded border border-white/10 bg-transparent p-1"
                   />
-                  <Input
-                    value={solidColor}
-                    onChange={(e) => setSolidColor(e.target.value)}
-                    className="max-w-[200px] font-mono text-sm"
-                  />
+                  <div className="max-w-[200px]">
+                    <Input
+                      value={solidColor}
+                      onChange={(e) => setSolidColor(e.target.value)}
+                      className="font-mono text-sm"
+                    />
+                  </div>
                 </div>
-              </div>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+              </Field>
+            </TabPanel>
+          </TabPanels>
+        </TabGroup>
+      </section>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>App Name</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
+        <Subheading level={2} className="mb-4">App Name</Subheading>
+        <div className="max-w-sm">
           <Input
             value={appName}
             onChange={(e) => setAppName(e.target.value)}
             placeholder="My App"
-            className="max-w-sm"
           />
-        </CardContent>
-      </Card>
+        </div>
+      </section>
 
       {generating && (
         <div className="flex items-center justify-center py-8">
-          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          <Loader2 className="h-8 w-8 animate-spin text-zinc-500" />
         </div>
       )}
 
       {favicons.length > 0 && !generating && (
         <>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>Preview</CardTitle>
-              <Button onClick={handleDownloadZip} variant="secondary" size="sm">
+          <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
+            <div className="mb-4 flex items-center justify-between">
+              <Subheading level={2}>Preview</Subheading>
+              <Button onClick={handleDownloadZip} outline>
                 <Download className="mr-2 h-4 w-4" />
                 Download ZIP
               </Button>
-            </CardHeader>
-            <CardContent>
-              <FaviconPreview favicons={favicons} />
-            </CardContent>
-          </Card>
+            </div>
+            <FaviconPreview favicons={favicons} />
+          </section>
 
-          <Separator />
+          <Divider soft />
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Code Snippets</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CodeSnippets appName={appName || "My App"} />
-            </CardContent>
-          </Card>
+          <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
+            <Subheading level={2} className="mb-4">Code Snippets</Subheading>
+            <CodeSnippets appName={appName || "My App"} />
+          </section>
         </>
       )}
     </div>

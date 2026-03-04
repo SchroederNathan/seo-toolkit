@@ -49,7 +49,7 @@ export function AuditScore({ data }: { data: OGData }) {
             fill="none"
             stroke="currentColor"
             strokeWidth="8"
-            className="text-muted"
+            className="text-zinc-800"
           />
           <circle
             cx="56"
@@ -72,7 +72,7 @@ export function AuditScore({ data }: { data: OGData }) {
         {AUDIT_FIELDS.map((field) => (
           <Badge
             key={field.key}
-            variant={data[field.key] ? "default" : "secondary"}
+            color={data[field.key] ? "green" : "zinc"}
             className="text-xs"
           >
             {data[field.key] ? "✓" : "✗"} {field.label}

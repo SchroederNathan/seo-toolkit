@@ -16,7 +16,7 @@ export function FaviconPreview({ favicons }: { favicons: FaviconSize[] }) {
       {favicons.map((favicon) => (
         <div
           key={favicon.size}
-          className="flex flex-col items-center gap-2 rounded-lg border bg-muted/30 p-3"
+          className="flex flex-col items-center gap-2 rounded-lg border border-white/10 bg-white/2.5 p-3"
         >
           <div className="flex h-20 w-20 items-center justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -25,17 +25,15 @@ export function FaviconPreview({ favicons }: { favicons: FaviconSize[] }) {
               alt={`${favicon.size}x${favicon.size}`}
               width={Math.min(favicon.size, 64)}
               height={Math.min(favicon.size, 64)}
-              className="image-rendering-pixelated"
               style={{ imageRendering: "pixelated" }}
             />
           </div>
-          <span className="text-xs text-muted-foreground">
+          <span className="text-xs text-zinc-400">
             {favicon.size}×{favicon.size}
           </span>
           <Button
-            variant="ghost"
-            size="sm"
-            className="h-7 text-xs"
+            plain
+            className="text-xs"
             onClick={() => handleDownload(favicon)}
           >
             <Download className="mr-1 h-3 w-3" />

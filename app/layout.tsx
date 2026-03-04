@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "OG Toolkit — OG Preview & Favicon Generator",
+  title: "SEO Toolkit — OG Preview & Favicon Generator",
   description:
     "Preview how your URLs appear on social platforms and generate favicons in all sizes.",
 };
