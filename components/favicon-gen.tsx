@@ -115,7 +115,7 @@ export function FaviconGen() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
+      <section className="border-b border-white/[0.08] pb-6">
         <div className="mb-4 flex items-center gap-2">
           <ImageIcon className="h-5 w-5 text-zinc-400" />
           <Subheading level={2}>Favicon Source</Subheading>
@@ -246,7 +246,7 @@ export function FaviconGen() {
         </TabGroup>
       </section>
 
-      <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
+      <section className="border-b border-white/[0.08] pb-6">
         <Subheading level={2} className="mb-4">App Name</Subheading>
         <div className="max-w-sm">
           <Input
@@ -265,7 +265,7 @@ export function FaviconGen() {
 
       {favicons.length > 0 && !generating && (
         <>
-          <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
+          <section className="border-b border-white/[0.08] pb-6">
             <div className="mb-4 flex items-center justify-between">
               <Subheading level={2}>Preview</Subheading>
               <Button onClick={handleDownloadZip} outline>
@@ -278,7 +278,7 @@ export function FaviconGen() {
 
           <Divider soft />
 
-          <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
+          <section className="border-b border-white/[0.08] pb-6">
             <Subheading level={2} className="mb-4">Code Snippets</Subheading>
             <CodeSnippets appName={appName || "My App"} />
           </section>
