@@ -3,16 +3,26 @@
 import { useCallback } from "react";
 import type { FaviconSize } from "@/lib/og-types";
 import { Button } from "@/components/ui/button";
-import { downloadBlob } from "@/lib/favicon-utils";
-import { Download } from "lucide-react";
+import { downloadBlob, generateIco } from "@/lib/favicon-utils";
+import { Download, FileIcon } from "lucide-react";
 
 export function FaviconPreview({ favicons }: { favicons: FaviconSize[] }) {
   const handleDownload = useCallback((favicon: FaviconSize) => {
     downloadBlob(favicon.blob, `favicon-${favicon.size}x${favicon.size}.png`);
   }, []);
 
+  const handleDownloadIco = useCallback(async () => {
+    const ico = await generateIco(favicons);
+    downloadBlob(ico, "favicon.ico");
+  }, [favicons]);
+
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
+    <div className="space-y-4">
+      <Button outline className="w-full" onClick={handleDownloadIco}>
+        <FileIcon className="mr-1.5 h-4 w-4" />
+        Download favicon.ico
+      </Button>
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
       {favicons.map((favicon) => (
         <div
           key={favicon.size}
@@ -41,6 +51,7 @@ export function FaviconPreview({ favicons }: { favicons: FaviconSize[] }) {
           </Button>
         </div>
       ))}
+      </div>
     </div>
   );
 }
