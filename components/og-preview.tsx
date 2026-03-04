@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Subheading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import { Divider } from "@/components/ui/divider";
 import { TwitterCard } from "@/components/twitter-card";
 import { FacebookCard } from "@/components/facebook-card";
 import { LinkedInCard } from "@/components/linkedin-card";
@@ -70,9 +69,9 @@ export function OGPreview() {
   );
 
   return (
-    <div>
+    <div className="grid grid-cols-1 gap-px bg-white/[0.06]">
       {/* URL Input Section */}
-      <section className="border-b border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
+      <section className="bg-zinc-950 p-6 sm:p-8">
         <div className="mb-4 flex items-center gap-2">
           <Globe className="h-4 w-4 text-zinc-500" />
           <Subheading level={2}>Enter a URL to preview</Subheading>
@@ -109,55 +108,55 @@ export function OGPreview() {
 
       {/* Error */}
       {error && (
-        <section className="border-b border-red-500/20 bg-red-500/[0.05] p-4 sm:px-8">
+        <section className="bg-red-500/[0.05] p-4 sm:px-8">
           <Text className="text-sm text-red-400">{error}</Text>
         </section>
       )}
 
       {/* Loading */}
       {loading && (
-        <div className="flex items-center justify-center border-b border-white/[0.08] py-12">
+        <div className="flex items-center justify-center bg-zinc-950 py-12">
           <Loader2 className="h-8 w-8 animate-spin text-zinc-600" />
         </div>
       )}
 
       {/* Results */}
       {data && (
-        <div>
+        <>
           {/* Platform Previews */}
-          <section className="border-b border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
+          <section className="bg-zinc-950 p-6 sm:p-8">
             <Subheading level={2} className="mb-4">Platform Previews</Subheading>
             <TabGroup>
-              <TabList className="flex w-fit border border-white/[0.08] rounded-md">
-                {platformTabs.map((name, i) => (
+              <TabList className="mb-4 grid w-fit grid-cols-4 gap-px bg-white/[0.06]">
+                {platformTabs.map((name) => (
                   <Tab
                     key={name}
                     className={clsx(
-                      "px-3 py-1.5 text-sm font-medium outline-none transition",
-                      i < platformTabs.length - 1 && "border-r border-white/[0.08]",
-                      "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.03]",
-                      "data-selected:bg-white/[0.05] data-selected:text-white"
+                      "bg-zinc-950 px-3 py-1.5 text-sm font-medium outline-none transition",
+                      "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900",
+                      "data-selected:bg-zinc-900 data-selected:text-white"
                     )}
                   >
                     {name}
                   </Tab>
                 ))}
               </TabList>
-              <TabPanels className="mt-4">
-                <TabPanel className="space-y-6">
-                  <div>
-                    <Text className="mb-2 text-xs text-zinc-500 uppercase tracking-wider">Twitter / X</Text>
-                    <TwitterCard data={data} />
-                  </div>
-                  <Divider soft />
-                  <div>
-                    <Text className="mb-2 text-xs text-zinc-500 uppercase tracking-wider">Facebook</Text>
-                    <FacebookCard data={data} />
-                  </div>
-                  <Divider soft />
-                  <div>
-                    <Text className="mb-2 text-xs text-zinc-500 uppercase tracking-wider">LinkedIn</Text>
-                    <LinkedInCard data={data} />
+              <TabPanels>
+                {/* All platforms — 3-column grid */}
+                <TabPanel>
+                  <div className="grid gap-px bg-white/[0.06] sm:grid-cols-3">
+                    <div className="bg-zinc-950 p-4">
+                      <Text className="mb-2 text-xs uppercase tracking-wider text-zinc-500">Twitter / X</Text>
+                      <TwitterCard data={data} />
+                    </div>
+                    <div className="bg-zinc-950 p-4">
+                      <Text className="mb-2 text-xs uppercase tracking-wider text-zinc-500">Facebook</Text>
+                      <FacebookCard data={data} />
+                    </div>
+                    <div className="bg-zinc-950 p-4">
+                      <Text className="mb-2 text-xs uppercase tracking-wider text-zinc-500">LinkedIn</Text>
+                      <LinkedInCard data={data} />
+                    </div>
                   </div>
                 </TabPanel>
                 <TabPanel>
@@ -173,21 +172,18 @@ export function OGPreview() {
             </TabGroup>
           </section>
 
-          {/* Audit + Meta in a 2-col grid */}
-          <div className="grid sm:grid-cols-2">
-            {/* Audit Score */}
-            <section className="border-b border-r border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
+          {/* Audit + Meta — 2-column grid */}
+          <div className="grid gap-px bg-white/[0.06] sm:grid-cols-2">
+            <section className="bg-zinc-950 p-6 sm:p-8">
               <Subheading level={2} className="mb-4">OG Audit Score</Subheading>
               <AuditScore data={data} />
             </section>
-
-            {/* Raw Meta Tags */}
-            <section className="border-b border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
+            <section className="bg-zinc-950 p-6 sm:p-8">
               <Subheading level={2} className="mb-4">Raw Meta Tags</Subheading>
               <MetaTable data={data} />
             </section>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
