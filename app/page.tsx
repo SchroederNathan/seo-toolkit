@@ -3,7 +3,6 @@
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/react";
 import { OGPreview } from "@/components/og-preview";
 import { FaviconGen } from "@/components/favicon-gen";
-import { Heading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
 import { Eye, ImageIcon } from "lucide-react";
 import clsx from "clsx";
@@ -15,32 +14,48 @@ const tabs = [
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-4xl px-4 py-8">
-      <div className="mb-8 text-center">
-        <Heading level={1}>SEO Toolkit</Heading>
-        <Text className="mt-2">
-          Preview social cards &amp; generate favicons — all in one place.
-        </Text>
-      </div>
+    <div className="mx-auto min-h-screen max-w-5xl border-x border-white/[0.08]">
+      {/* Header row */}
+      <header className="border-b border-white/[0.08] px-6 py-5 sm:px-8">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-md border border-white/[0.08] bg-white/[0.03] font-mono text-sm font-semibold text-zinc-300">
+              S
+            </div>
+            <span className="text-sm font-semibold tracking-tight text-white">
+              SEO Toolkit
+            </span>
+          </div>
+          <Text className="text-xs text-zinc-500">
+            OG Preview &amp; Favicon Generator
+          </Text>
+        </div>
+      </header>
 
+      {/* Tab navigation row */}
       <TabGroup>
-        <TabList className="mx-auto flex w-fit gap-1 rounded-lg bg-white/5 p-1">
-          {tabs.map((tab) => (
-            <Tab
-              key={tab.name}
-              className={clsx(
-                "flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium outline-none transition",
-                "text-zinc-400 hover:text-white",
-                "data-selected:bg-white/10 data-selected:text-white"
-              )}
-            >
-              <tab.icon className="h-4 w-4" />
-              {tab.name}
-            </Tab>
-          ))}
-        </TabList>
+        <div className="border-b border-white/[0.08]">
+          <TabList className="flex">
+            {tabs.map((tab) => (
+              <Tab
+                key={tab.name}
+                className={clsx(
+                  "flex items-center gap-2 border-r border-white/[0.08] px-6 py-3 text-sm font-medium outline-none transition",
+                  "text-zinc-500 hover:bg-white/[0.02] hover:text-zinc-300",
+                  "data-selected:bg-white/[0.03] data-selected:text-white"
+                )}
+              >
+                <tab.icon className="h-4 w-4" />
+                {tab.name}
+              </Tab>
+            ))}
+            {/* Empty cell to fill remaining space */}
+            <div className="flex-1" />
+          </TabList>
+        </div>
 
-        <TabPanels className="mt-6">
+        {/* Content area */}
+        <TabPanels>
           <TabPanel>
             <OGPreview />
           </TabPanel>
@@ -49,6 +64,6 @@ export default function Home() {
           </TabPanel>
         </TabPanels>
       </TabGroup>
-    </main>
+    </div>
   );
 }

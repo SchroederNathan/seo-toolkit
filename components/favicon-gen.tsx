@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Field, Label } from "@/components/ui/fieldset";
 import { Subheading } from "@/components/ui/heading";
-import { Divider } from "@/components/ui/divider";
 import { FaviconPreview } from "@/components/favicon-preview";
 import { CodeSnippets } from "@/components/code-snippets";
 import {
@@ -114,22 +113,24 @@ export function FaviconGen() {
   }, []);
 
   return (
-    <div className="space-y-6">
-      <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
+    <div>
+      {/* Favicon Source */}
+      <section className="border-b border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
         <div className="mb-4 flex items-center gap-2">
-          <ImageIcon className="h-5 w-5 text-zinc-400" />
+          <ImageIcon className="h-4 w-4 text-zinc-500" />
           <Subheading level={2}>Favicon Source</Subheading>
         </div>
 
         <TabGroup selectedIndex={modeIndex} onChange={handleModeChange}>
-          <TabList className="flex gap-1 rounded-lg bg-white/5 p-1 w-fit">
-            {modeTabs.map((tab) => (
+          <TabList className="flex w-fit border border-white/[0.08] rounded-md">
+            {modeTabs.map((tab, i) => (
               <Tab
                 key={tab.name}
                 className={clsx(
-                  "flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium outline-none transition",
-                  "text-zinc-400 hover:text-white",
-                  "data-selected:bg-white/10 data-selected:text-white"
+                  "flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium outline-none transition",
+                  i < modeTabs.length - 1 && "border-r border-white/[0.08]",
+                  "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.03]",
+                  "data-selected:bg-white/[0.05] data-selected:text-white"
                 )}
               >
                 <tab.icon className="h-3.5 w-3.5" />
@@ -156,7 +157,7 @@ export function FaviconGen() {
                   <img
                     src={imageUrl}
                     alt="Preview"
-                    className="h-16 w-16 rounded-lg border border-white/10 object-cover"
+                    className="h-16 w-16 rounded-lg border border-white/[0.08] object-cover"
                   />
                   <Button
                     onClick={handleGenerateFromImage}
@@ -190,7 +191,7 @@ export function FaviconGen() {
                       type="color"
                       value={emojiBg}
                       onChange={(e) => setEmojiBg(e.target.value)}
-                      className="h-9 w-12 cursor-pointer rounded border border-white/10 bg-transparent p-1"
+                      className="h-9 w-12 cursor-pointer rounded border border-white/[0.08] bg-transparent p-1"
                     />
                     <div className="flex-1">
                       <Input
@@ -208,7 +209,7 @@ export function FaviconGen() {
                       type="color"
                       value={emojiFg}
                       onChange={(e) => setEmojiFg(e.target.value)}
-                      className="h-9 w-12 cursor-pointer rounded border border-white/10 bg-transparent p-1"
+                      className="h-9 w-12 cursor-pointer rounded border border-white/[0.08] bg-transparent p-1"
                     />
                     <div className="flex-1">
                       <Input
@@ -230,7 +231,7 @@ export function FaviconGen() {
                     type="color"
                     value={solidColor}
                     onChange={(e) => setSolidColor(e.target.value)}
-                    className="h-9 w-12 cursor-pointer rounded border border-white/10 bg-transparent p-1"
+                    className="h-9 w-12 cursor-pointer rounded border border-white/[0.08] bg-transparent p-1"
                   />
                   <div className="max-w-[200px]">
                     <Input
@@ -246,7 +247,8 @@ export function FaviconGen() {
         </TabGroup>
       </section>
 
-      <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
+      {/* App Name */}
+      <section className="border-b border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
         <Subheading level={2} className="mb-4">App Name</Subheading>
         <div className="max-w-sm">
           <Input
@@ -258,14 +260,15 @@ export function FaviconGen() {
       </section>
 
       {generating && (
-        <div className="flex items-center justify-center py-8">
-          <Loader2 className="h-8 w-8 animate-spin text-zinc-500" />
+        <div className="flex items-center justify-center border-b border-white/[0.08] py-8">
+          <Loader2 className="h-8 w-8 animate-spin text-zinc-600" />
         </div>
       )}
 
       {favicons.length > 0 && !generating && (
         <>
-          <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
+          {/* Preview */}
+          <section className="border-b border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
             <div className="mb-4 flex items-center justify-between">
               <Subheading level={2}>Preview</Subheading>
               <Button onClick={handleDownloadZip} outline>
@@ -276,9 +279,8 @@ export function FaviconGen() {
             <FaviconPreview favicons={favicons} />
           </section>
 
-          <Divider soft />
-
-          <section className="rounded-lg border border-white/10 bg-white/2.5 p-6">
+          {/* Code Snippets */}
+          <section className="border-b border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
             <Subheading level={2} className="mb-4">Code Snippets</Subheading>
             <CodeSnippets appName={appName || "My App"} />
           </section>

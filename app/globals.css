@@ -13,3 +13,16 @@
     @apply bg-zinc-950 text-white;
   }
 }
+
+/* Constructionist grid background */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* Grid cell — sections that sit inside the visible grid */
+.grid-cell {
+  @apply border border-white/[0.08] bg-white/[0.02] rounded-lg p-6;
+}
