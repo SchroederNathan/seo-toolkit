@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Subheading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
-import { Divider } from "@/components/ui/divider";
 import { TwitterCard } from "@/components/twitter-card";
 import { FacebookCard } from "@/components/facebook-card";
 import { LinkedInCard } from "@/components/linkedin-card";
@@ -72,7 +71,7 @@ export function OGPreview() {
   return (
     <div className="divide-y divide-white/[0.08] [space-y-6>*]:pt-6 pt-0">
       {/* URL Input Section */}
-      <section className="border-b border-white/[0.08] pb-6">
+      <section className="p-0">
         <div className="mb-4 flex items-center gap-2">
           <Globe className="h-5 w-5 text-zinc-400" />
           <Subheading level={2}>Enter a URL to preview</Subheading>
@@ -125,7 +124,7 @@ export function OGPreview() {
       {data && (
         <div className="divide-y divide-white/[0.08] [space-y-6>*]:pt-6 pt-0">
           {/* Platform Previews */}
-          <section className="border-b border-white/[0.08] pb-6">
+          <section className="p-0">
             <Subheading level={2} className="mb-4">Platform Previews</Subheading>
             <TabGroup>
               <TabList className="flex gap-1 rounded-lg bg-white/5 p-1 w-fit">
@@ -148,12 +147,10 @@ export function OGPreview() {
                     <Text className="mb-2 text-sm">Twitter / X</Text>
                     <TwitterCard data={data} />
                   </div>
-                  <Divider soft />
                   <div>
                     <Text className="mb-2 text-sm">Facebook</Text>
                     <FacebookCard data={data} />
                   </div>
-                  <Divider soft />
                   <div>
                     <Text className="mb-2 text-sm">LinkedIn</Text>
                     <LinkedInCard data={data} />
@@ -173,13 +170,13 @@ export function OGPreview() {
           </section>
 
           {/* Audit Score */}
-          <section className="border-b border-white/[0.08] pb-6">
+          <section className="p-0">
             <Subheading level={2} className="mb-4">OG Audit Score</Subheading>
             <AuditScore data={data} />
           </section>
 
           {/* Raw Meta Tags */}
-          <section className="border-b border-white/[0.08] pb-6">
+          <section className="p-0">
             <Subheading level={2} className="mb-4">Raw Meta Tags</Subheading>
             <MetaTable data={data} />
           </section>

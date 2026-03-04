@@ -8,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Field, Label } from "@/components/ui/fieldset";
 import { Subheading } from "@/components/ui/heading";
-import { Divider } from "@/components/ui/divider";
 import { FaviconPreview } from "@/components/favicon-preview";
 import { CodeSnippets } from "@/components/code-snippets";
 import {
@@ -115,7 +114,7 @@ export function FaviconGen() {
 
   return (
     <div className="space-y-6">
-      <section className="border-b border-white/[0.08] pb-6">
+      <section className="p-0">
         <div className="mb-4 flex items-center gap-2">
           <ImageIcon className="h-5 w-5 text-zinc-400" />
           <Subheading level={2}>Favicon Source</Subheading>
@@ -246,7 +245,7 @@ export function FaviconGen() {
         </TabGroup>
       </section>
 
-      <section className="border-b border-white/[0.08] pb-6">
+      <section className="p-0">
         <Subheading level={2} className="mb-4">App Name</Subheading>
         <div className="max-w-sm">
           <Input
@@ -265,7 +264,7 @@ export function FaviconGen() {
 
       {favicons.length > 0 && !generating && (
         <>
-          <section className="border-b border-white/[0.08] pb-6">
+          <section className="p-0">
             <div className="mb-4 flex items-center justify-between">
               <Subheading level={2}>Preview</Subheading>
               <Button onClick={handleDownloadZip} outline>
@@ -276,9 +275,8 @@ export function FaviconGen() {
             <FaviconPreview favicons={favicons} />
           </section>
 
-          <Divider soft />
 
-          <section className="border-b border-white/[0.08] pb-6">
+          <section className="p-0">
             <Subheading level={2} className="mb-4">Code Snippets</Subheading>
             <CodeSnippets appName={appName || "My App"} />
           </section>

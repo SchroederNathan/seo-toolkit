@@ -11,19 +11,14 @@ const tabs = [
   { name: "Favicon Generator", icon: ImageIcon },
 ];
 
-/**
- * Infinite border lines that extend way beyond the container.
- * Placed on the content column edges so they run through header, tabs, content, everything.
- */
+/** Vertical lines on the content column edges — extend infinitely */
 function GridLines() {
   return (
     <>
-      {/* Left vertical line */}
       <div
         className="pointer-events-none absolute left-0 top-0 w-0 border-l border-white/[0.06]"
         style={{ height: 4000, marginTop: -2000 }}
       />
-      {/* Right vertical line */}
       <div
         className="pointer-events-none absolute right-0 top-0 w-0 border-l border-white/[0.06]"
         style={{ height: 4000, marginTop: -2000 }}
@@ -32,11 +27,11 @@ function GridLines() {
   );
 }
 
-/** Full-width horizontal border that bleeds past the container */
-function HLine() {
+/** Full-width horizontal border — must be inside a positioned parent, pinned with top/bottom */
+function HLine({ className }: { className?: string }) {
   return (
     <div
-      className="pointer-events-none absolute left-0 right-0 h-0 border-t border-white/[0.06]"
+      className={clsx("pointer-events-none absolute left-0 h-0 border-t border-white/[0.06]", className)}
       style={{ width: 4000, marginLeft: -2000 }}
     />
   );
@@ -45,32 +40,32 @@ function HLine() {
 export default function Home() {
   return (
     <div className="min-h-screen overflow-x-hidden">
-      {/* Content column — relative so GridLines attach here */}
       <div className="relative mx-auto max-w-5xl px-6">
         <GridLines />
 
         {/* Header */}
-        <header className="relative flex items-center justify-between py-4">
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-indigo-600 text-xs font-bold">
-              S
+        <header className="relative py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-indigo-600 text-xs font-bold">
+                S
+              </div>
+              <span className="text-sm font-semibold tracking-tight text-white">
+                SEO Toolkit
+              </span>
             </div>
-            <span className="text-sm font-semibold tracking-tight text-white">
-              SEO Toolkit
+            <span className="text-xs text-zinc-500">
+              OG Preview & Favicon Generator
             </span>
           </div>
-          <span className="text-xs text-zinc-500">
-            OG Preview & Favicon Generator
-          </span>
-          {/* Bottom border — extends full screen width */}
-          <HLine />
-          <div className="absolute bottom-0 left-0 right-0" />
+          {/* Border at the bottom of header */}
+          <HLine className="bottom-0" />
         </header>
 
         <TabGroup>
           {/* Tab bar */}
           <div className="relative">
-            <TabList className="-mb-px flex gap-0">
+            <TabList className="flex gap-0">
               {tabs.map((tab) => (
                 <Tab
                   key={tab.name}
@@ -85,10 +80,8 @@ export default function Home() {
                 </Tab>
               ))}
             </TabList>
-            {/* Bottom border of tab bar — full width */}
-            <div className="absolute bottom-0">
-              <HLine />
-            </div>
+            {/* Border at the bottom of tab bar */}
+            <HLine className="bottom-0" />
           </div>
 
           {/* Content */}
