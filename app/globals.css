@@ -3,18 +3,18 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --color-1: oklch(0.181 0.028 252);
-  --color-2: oklch(0.212 0.039 252);
-  --color-3: oklch(0.277 0.077 252);
-  --color-4: oklch(0.328 0.107 252);
-  --color-5: oklch(0.374 0.131 252);
-  --color-6: oklch(0.425 0.152 252);
-  --color-7: oklch(0.493 0.172 252);
-  --color-8: oklch(0.579 0.191 252);
-  --color-9: oklch(0.629 0.187 252);
-  --color-10: oklch(0.682 0.176 252);
-  --color-11: oklch(0.849 0.107 252);
-  --color-12: oklch(0.921 0.063 252);
+  --color-1: oklch(0.162 0 0);
+  --color-2: oklch(0.195 0 0);
+  --color-3: oklch(0.254 0 0);
+  --color-4: oklch(0.302 0 0);
+  --color-5: oklch(0.348 0 0);
+  --color-6: oklch(0.396 0 0);
+  --color-7: oklch(0.459 0 0);
+  --color-8: oklch(0.549 0 0);
+  --color-9: oklch(0.649 0 0);
+  --color-10: oklch(0.72 0 0);
+  --color-11: oklch(0.863 0 0);
+  --color-12: oklch(0.933 0 0);
 }
 
 @theme inline {
