@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Field, Label } from "@/components/ui/fieldset";
 import { Subheading } from "@/components/ui/heading";
+import { HLine } from "@/components/h-line";
 import { FaviconPreview } from "@/components/favicon-preview";
 import { CodeSnippets } from "@/components/code-snippets";
 import {
@@ -39,7 +40,6 @@ export function FaviconGen() {
 
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
 
   const mode = modeIndex === 0 ? "upload" : modeIndex === 1 ? "emoji" : "color";
@@ -57,9 +57,7 @@ export function FaviconGen() {
         }
       }, 300);
     }
-    return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-    };
+    return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
   }, [mode, emojiText, emojiBg, emojiFg]);
 
   useEffect(() => {
@@ -75,20 +73,14 @@ export function FaviconGen() {
         }
       }, 300);
     }
-    return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-    };
+    return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
   }, [mode, solidColor]);
 
-  const handleFileChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      const url = URL.createObjectURL(file);
-      setImageUrl(url);
-    },
-    []
-  );
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImageUrl(URL.createObjectURL(file));
+  }, []);
 
   const handleGenerateFromImage = useCallback(async () => {
     if (!imageUrl) return;
@@ -113,8 +105,9 @@ export function FaviconGen() {
   }, []);
 
   return (
-    <div className="space-y-6">
-      <section className="p-0">
+    <div>
+      {/* Favicon Source */}
+      <section className="py-6">
         <div className="mb-4 flex items-center gap-2">
           <ImageIcon className="h-5 w-5 text-brand-11" />
           <Subheading level={2}>Favicon Source</Subheading>
@@ -152,19 +145,9 @@ export function FaviconGen() {
               {imageUrl && (
                 <div className="flex items-center gap-4">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={imageUrl}
-                    alt="Preview"
-                    className="h-16 w-16 rounded-lg border border-brand-3 object-cover"
-                  />
-                  <Button
-                    onClick={handleGenerateFromImage}
-                    disabled={generating}
-                    color="indigo"
-                  >
-                    {generating ? (
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    ) : null}
+                  <img src={imageUrl} alt="Preview" className="h-16 w-16 rounded-lg border border-brand-3 object-cover" />
+                  <Button onClick={handleGenerateFromImage} disabled={generating} color="indigo">
+                    {generating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                     Generate Favicons
                   </Button>
                 </div>
@@ -175,46 +158,23 @@ export function FaviconGen() {
               <div className="grid gap-4 sm:grid-cols-3">
                 <Field>
                   <Label>Emoji or Text</Label>
-                  <Input
-                    value={emojiText}
-                    onChange={(e) => setEmojiText(e.target.value)}
-                    placeholder="🚀"
-                    maxLength={4}
-                  />
+                  <Input value={emojiText} onChange={(e) => setEmojiText(e.target.value)} placeholder="🚀" maxLength={4} />
                 </Field>
                 <Field>
                   <Label>Background</Label>
                   <div className="mt-2 flex gap-2">
-                    <input
-                      type="color"
-                      value={emojiBg}
-                      onChange={(e) => setEmojiBg(e.target.value)}
-                      className="h-9 w-12 cursor-pointer rounded border border-brand-3 bg-transparent p-1"
-                    />
+                    <input type="color" value={emojiBg} onChange={(e) => setEmojiBg(e.target.value)} className="h-9 w-12 cursor-pointer rounded border border-brand-3 bg-transparent p-1" />
                     <div className="flex-1">
-                      <Input
-                        value={emojiBg}
-                        onChange={(e) => setEmojiBg(e.target.value)}
-                        className="font-mono text-sm"
-                      />
+                      <Input value={emojiBg} onChange={(e) => setEmojiBg(e.target.value)} className="font-mono text-sm" />
                     </div>
                   </div>
                 </Field>
                 <Field>
                   <Label>Text Color</Label>
                   <div className="mt-2 flex gap-2">
-                    <input
-                      type="color"
-                      value={emojiFg}
-                      onChange={(e) => setEmojiFg(e.target.value)}
-                      className="h-9 w-12 cursor-pointer rounded border border-brand-3 bg-transparent p-1"
-                    />
+                    <input type="color" value={emojiFg} onChange={(e) => setEmojiFg(e.target.value)} className="h-9 w-12 cursor-pointer rounded border border-brand-3 bg-transparent p-1" />
                     <div className="flex-1">
-                      <Input
-                        value={emojiFg}
-                        onChange={(e) => setEmojiFg(e.target.value)}
-                        className="font-mono text-sm"
-                      />
+                      <Input value={emojiFg} onChange={(e) => setEmojiFg(e.target.value)} className="font-mono text-sm" />
                     </div>
                   </div>
                 </Field>
@@ -225,18 +185,9 @@ export function FaviconGen() {
               <Field>
                 <Label>Solid Color</Label>
                 <div className="mt-2 flex gap-2">
-                  <input
-                    type="color"
-                    value={solidColor}
-                    onChange={(e) => setSolidColor(e.target.value)}
-                    className="h-9 w-12 cursor-pointer rounded border border-brand-3 bg-transparent p-1"
-                  />
+                  <input type="color" value={solidColor} onChange={(e) => setSolidColor(e.target.value)} className="h-9 w-12 cursor-pointer rounded border border-brand-3 bg-transparent p-1" />
                   <div className="max-w-[200px]">
-                    <Input
-                      value={solidColor}
-                      onChange={(e) => setSolidColor(e.target.value)}
-                      className="font-mono text-sm"
-                    />
+                    <Input value={solidColor} onChange={(e) => setSolidColor(e.target.value)} className="font-mono text-sm" />
                   </div>
                 </div>
               </Field>
@@ -245,14 +196,12 @@ export function FaviconGen() {
         </TabGroup>
       </section>
 
-      <section className="p-0">
+      {/* App Name */}
+      <HLine />
+      <section className="py-6">
         <Subheading level={2} className="mb-4">App Name</Subheading>
         <div className="max-w-sm">
-          <Input
-            value={appName}
-            onChange={(e) => setAppName(e.target.value)}
-            placeholder="My App"
-          />
+          <Input value={appName} onChange={(e) => setAppName(e.target.value)} placeholder="My App" />
         </div>
       </section>
 
@@ -264,7 +213,9 @@ export function FaviconGen() {
 
       {favicons.length > 0 && !generating && (
         <>
-          <section className="p-0">
+          {/* Preview */}
+          <HLine />
+          <section className="py-6">
             <div className="mb-4 flex items-center justify-between">
               <Subheading level={2}>Preview</Subheading>
               <Button onClick={handleDownloadZip} outline>
@@ -275,8 +226,9 @@ export function FaviconGen() {
             <FaviconPreview favicons={favicons} />
           </section>
 
-
-          <section className="p-0">
+          {/* Code Snippets */}
+          <HLine />
+          <section className="py-6">
             <Subheading level={2} className="mb-4">Code Snippets</Subheading>
             <CodeSnippets appName={appName || "My App"} />
           </section>

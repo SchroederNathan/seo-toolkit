@@ -27,13 +27,15 @@ function GridLines() {
   );
 }
 
-/** Full-width horizontal border — must be inside a positioned parent, pinned with top/bottom */
+/** Full-width horizontal border pinned inside a relative parent */
 function HLine({ className }: { className?: string }) {
   return (
-    <div
-      className={clsx("pointer-events-none absolute left-0 h-0 border-t border-brand-3", className)}
-      style={{ width: 4000, marginLeft: -2000 }}
-    />
+    <div className={clsx("relative", className)}>
+      <div
+        className="pointer-events-none absolute left-0 h-0 border-t border-brand-3"
+        style={{ width: 4000, marginLeft: -2000 }}
+      />
+    </div>
   );
 }
 
@@ -44,7 +46,7 @@ export default function Home() {
         <GridLines />
 
         {/* Header */}
-        <header className="relative py-4">
+        <header className="py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <div className="flex h-7 w-7 items-center justify-center rounded-md bg-brand-8 text-xs font-bold">
@@ -58,34 +60,32 @@ export default function Home() {
               OG Preview & Favicon Generator
             </span>
           </div>
-          {/* Border at the bottom of header */}
-          <HLine className="bottom-0" />
         </header>
+
+        <HLine />
 
         <TabGroup>
           {/* Tab bar */}
-          <div className="relative">
-            <TabList className="flex gap-0">
-              {tabs.map((tab) => (
-                <Tab
-                  key={tab.name}
-                  className={clsx(
-                    "flex items-center gap-1.5 border-b-2 px-4 py-3 text-sm font-medium outline-none transition",
-                    "border-transparent text-brand-10 hover:text-brand-11",
-                    "data-selected:border-brand-9 data-selected:text-brand-12"
-                  )}
-                >
-                  <tab.icon className="h-4 w-4" />
-                  {tab.name}
-                </Tab>
-              ))}
-            </TabList>
-            {/* Border at the bottom of tab bar */}
-            <HLine className="bottom-0" />
-          </div>
+          <TabList className="flex gap-0">
+            {tabs.map((tab) => (
+              <Tab
+                key={tab.name}
+                className={clsx(
+                  "flex items-center gap-1.5 border-b-2 px-4 py-3 text-sm font-medium outline-none transition",
+                  "border-transparent text-brand-10 hover:text-brand-11",
+                  "data-selected:border-brand-9 data-selected:text-brand-12"
+                )}
+              >
+                <tab.icon className="h-4 w-4" />
+                {tab.name}
+              </Tab>
+            ))}
+          </TabList>
+
+          <HLine />
 
           {/* Content */}
-          <TabPanels className="py-8">
+          <TabPanels>
             <TabPanel>
               <OGPreview />
             </TabPanel>

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Subheading } from "@/components/ui/heading";
 import { Text } from "@/components/ui/text";
+import { HLine } from "@/components/h-line";
 import { TwitterCard } from "@/components/twitter-card";
 import { FacebookCard } from "@/components/facebook-card";
 import { LinkedInCard } from "@/components/linkedin-card";
@@ -17,7 +18,6 @@ import { MetaTable } from "@/components/meta-table";
 import { Search, Loader2, Globe } from "lucide-react";
 
 const EXAMPLE_URLS = ["vercel.com", "github.com", "stripe.com", "linear.app"];
-
 const platformTabs = ["All", "Twitter", "Facebook", "LinkedIn"];
 
 export function OGPreview() {
@@ -28,22 +28,16 @@ export function OGPreview() {
 
   const fetchOG = useCallback(async (targetUrl: string) => {
     if (!targetUrl.trim()) return;
-
     setLoading(true);
     setError(null);
     setData(null);
-
     try {
-      const res = await fetch(
-        `/api/og?url=${encodeURIComponent(targetUrl.trim())}`
-      );
+      const res = await fetch(`/api/og?url=${encodeURIComponent(targetUrl.trim())}`);
       const json = await res.json();
-
       if (!res.ok) {
         setError(json.error || "Failed to fetch OG data");
         return;
       }
-
       setData(json);
     } catch {
       setError("Network error. Please try again.");
@@ -69,9 +63,9 @@ export function OGPreview() {
   );
 
   return (
-    <div className="divide-y divide-white/[0.08] [space-y-6>*]:pt-6 pt-0">
-      {/* URL Input Section */}
-      <section className="p-0">
+    <div>
+      {/* URL Input */}
+      <section className="py-6">
         <div className="mb-4 flex items-center gap-2">
           <Globe className="h-5 w-5 text-brand-11" />
           <Subheading level={2}>Enter a URL to preview</Subheading>
@@ -98,9 +92,7 @@ export function OGPreview() {
           <Text className="text-sm">Try:</Text>
           {EXAMPLE_URLS.map((ex) => (
             <button key={ex} onClick={() => handleExample(ex)}>
-              <Badge color="zinc" className="cursor-pointer">
-                {ex}
-              </Badge>
+              <Badge color="zinc" className="cursor-pointer">{ex}</Badge>
             </button>
           ))}
         </div>
@@ -108,9 +100,14 @@ export function OGPreview() {
 
       {/* Error */}
       {error && (
-        <section className="rounded-lg border border-red-500/30 bg-red-500/10 p-4">
-          <Text className="text-sm text-red-400">{error}</Text>
-        </section>
+        <>
+          <HLine />
+          <section className="py-6">
+            <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-4">
+              <Text className="text-sm text-red-400">{error}</Text>
+            </div>
+          </section>
+        </>
       )}
 
       {/* Loading */}
@@ -122,9 +119,10 @@ export function OGPreview() {
 
       {/* Results */}
       {data && (
-        <div className="divide-y divide-white/[0.08] [space-y-6>*]:pt-6 pt-0">
+        <>
           {/* Platform Previews */}
-          <section className="p-0">
+          <HLine />
+          <section className="py-6">
             <Subheading level={2} className="mb-4">Platform Previews</Subheading>
             <TabGroup>
               <TabList className="flex gap-1 rounded-lg bg-brand-2 p-1 w-fit">
@@ -142,7 +140,7 @@ export function OGPreview() {
                 ))}
               </TabList>
               <TabPanels className="mt-4">
-                <TabPanel className="divide-y divide-white/[0.08] [space-y-6>*]:pt-6">
+                <TabPanel className="space-y-6">
                   <div>
                     <Text className="mb-2 text-sm">Twitter / X</Text>
                     <TwitterCard data={data} />
@@ -170,17 +168,19 @@ export function OGPreview() {
           </section>
 
           {/* Audit Score */}
-          <section className="p-0">
+          <HLine />
+          <section className="py-6">
             <Subheading level={2} className="mb-4">OG Audit Score</Subheading>
             <AuditScore data={data} />
           </section>
 
           {/* Raw Meta Tags */}
-          <section className="p-0">
+          <HLine />
+          <section className="py-6">
             <Subheading level={2} className="mb-4">Raw Meta Tags</Subheading>
             <MetaTable data={data} />
           </section>
-        </div>
+        </>
       )}
     </div>
   );
