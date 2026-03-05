@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/react";
 import { OGPreview } from "@/components/og-preview";
 import { FaviconGen } from "@/components/favicon-gen";
-import { Eye, ImageIcon } from "lucide-react";
+import { Eye, ImageIcon, Globe } from "lucide-react";
 import clsx from "clsx";
 
 const tabs = [
@@ -57,8 +57,8 @@ export default function Home() {
         <header className="py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-brand-8 text-xs font-bold">
-                S
+              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-brand-8">
+                <Globe className="h-4 w-4 text-white" />
               </div>
               <span className="text-sm font-semibold tracking-tight text-brand-12">
                 SEO Toolkit
