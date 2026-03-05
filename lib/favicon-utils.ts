@@ -30,7 +30,11 @@ export async function generateFromImage(
       canvas.width = size;
       canvas.height = size;
       const ctx = canvas.getContext("2d")!;
-      ctx.drawImage(img, 0, 0, size, size);
+      // Fit image to square without stretching (contain / letterbox)
+      const scale = Math.min(size / img.width, size / img.height);
+      const w = img.width * scale;
+      const h = img.height * scale;
+      ctx.drawImage(img, (size - w) / 2, (size - h) / 2, w, h);
       const blob = await canvasToBlob(canvas);
       return { size, blob, url: URL.createObjectURL(blob) };
     })

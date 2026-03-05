@@ -146,7 +146,7 @@ export function FaviconGen() {
                 <div className="flex items-center gap-4">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={imageUrl} alt="Preview" className="h-16 w-16 rounded-md border border-brand-3 object-cover" />
-                  <Button onClick={handleGenerateFromImage} disabled={generating} color="indigo">
+                  <Button onClick={handleGenerateFromImage} disabled={generating} color="dark">
                     {generating ? <Loader2 data-slot="icon" className="h-4 w-4 animate-spin" /> : null}
                     Generate Favicons
                   </Button>
@@ -155,7 +155,7 @@ export function FaviconGen() {
             </TabPanel>
 
             <TabPanel className="space-y-4">
-              <div className="grid gap-4 sm:grid-cols-3">
+              <div className="grid gap-4 sm:grid-cols-3 items-end">
                 <Field>
                   <Label>Emoji or Text</Label>
                   <Input value={emojiText} onChange={(e) => setEmojiText(e.target.value)} placeholder="🚀" maxLength={4} />

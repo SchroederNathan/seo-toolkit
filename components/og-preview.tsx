@@ -106,13 +106,13 @@ export function OGPreview() {
         <form onSubmit={handleSubmit} className="flex gap-2">
           <div className="flex-1">
             <Input
-              type="url"
-              placeholder="https://example.com"
+              type="text"
+              placeholder="example.com"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
             />
           </div>
-          <Button type="submit" disabled={loading || !url.trim()} color="indigo">
+          <Button type="submit" disabled={loading || !url.trim()} color="dark">
             {loading ? (
               <Loader2 data-slot="icon" className="h-4 w-4 animate-spin" />
             ) : (
