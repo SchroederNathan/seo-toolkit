@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/react";
 import clsx from "clsx";
 import type { OGData } from "@/lib/og-types";
@@ -15,7 +15,7 @@ import { FacebookCard } from "@/components/facebook-card";
 import { LinkedInCard } from "@/components/linkedin-card";
 import { AuditScore } from "@/components/audit-score";
 import { MetaTable } from "@/components/meta-table";
-import { Search, Loader2, Globe } from "lucide-react";
+import { Search, Loader2, Globe, Link2, Check } from "lucide-react";
 
 const EXAMPLE_URLS = ["vercel.com", "github.com", "stripe.com", "linear.app"];
 const platformTabs = ["All", "Twitter", "Facebook", "LinkedIn"];
@@ -25,6 +25,7 @@ export function OGPreview() {
   const [data, setData] = useState<OGData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [shareCopied, setShareCopied] = useState(false);
 
   const fetchOG = useCallback(async (targetUrl: string) => {
     if (!targetUrl.trim()) return;
@@ -36,14 +37,46 @@ export function OGPreview() {
       const json = await res.json();
       if (!res.ok) {
         setError(json.error || "Failed to fetch OG data");
+        // Clear URL param on error
+        window.history.replaceState(null, "", window.location.pathname);
         return;
       }
       setData(json);
+      // Sync the analyzed URL into the address bar for shareability
+      const params = new URLSearchParams();
+      params.set("url", targetUrl.trim());
+      window.history.replaceState(null, "", `?${params.toString()}`);
     } catch {
       setError("Network error. Please try again.");
     } finally {
       setLoading(false);
     }
+  }, []);
+
+  // On mount: auto-analyze if ?url= param is present
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const preloadUrl = params.get("url");
+    if (preloadUrl) {
+      setUrl(preloadUrl);
+      fetchOG(preloadUrl);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleShareCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+    } catch {
+      const input = document.createElement("input");
+      input.value = window.location.href;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("copy");
+      document.body.removeChild(input);
+    }
+    setShareCopied(true);
+    setTimeout(() => setShareCopied(false), 2000);
   }, []);
 
   const handleSubmit = useCallback(
@@ -170,7 +203,26 @@ export function OGPreview() {
           {/* Audit Score */}
           <HLine />
           <section className="py-6">
-            <Subheading level={2} className="mb-4">OG Audit Score</Subheading>
+            <div className="mb-4 flex items-center justify-between">
+              <Subheading level={2}>OG Audit Score</Subheading>
+              {/* Share Analysis button */}
+              <button
+                onClick={handleShareCopy}
+                className={clsx(
+                  "inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-all",
+                  shareCopied
+                    ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
+                    : "bg-brand-3 text-brand-11 hover:bg-brand-4 hover:text-brand-12 border border-brand-5"
+                )}
+                title="Copy a link to this analysis"
+              >
+                {shareCopied ? (
+                  <><Check className="h-3.5 w-3.5" /> Copied!</>
+                ) : (
+                  <><Link2 className="h-3.5 w-3.5" /> Share Analysis</>
+                )}
+              </button>
+            </div>
             <AuditScore data={data} />
           </section>
 
