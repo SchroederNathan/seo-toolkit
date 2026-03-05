@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/react";
 import { OGPreview } from "@/components/og-preview";
 import { FaviconGen } from "@/components/favicon-gen";
@@ -40,6 +41,13 @@ function HLine({ className }: { className?: string }) {
 }
 
 export default function Home() {
+  // If ?url= param is present on load, default to the OG Preview tab (index 0)
+  const [selectedTab, setSelectedTab] = useState(0);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("url")) setSelectedTab(0);
+  }, []);
+
   return (
     <div className="min-h-screen overflow-x-hidden">
       <div className="relative mx-auto max-w-5xl px-6">
@@ -64,7 +72,7 @@ export default function Home() {
 
         <HLine />
 
-        <TabGroup>
+        <TabGroup selectedIndex={selectedTab} onChange={setSelectedTab}>
           {/* Tab bar */}
           <TabList className="flex gap-0">
             {tabs.map((tab) => (
