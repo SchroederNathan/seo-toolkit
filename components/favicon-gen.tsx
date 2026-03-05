@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/react";
-import clsx from "clsx";
 import type { FaviconSize } from "@/lib/og-types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -114,18 +113,15 @@ export function FaviconGen() {
         </div>
 
         <TabGroup selectedIndex={modeIndex} onChange={handleModeChange}>
-          <TabList className="flex gap-1 rounded-md bg-brand-2 p-1 w-fit">
-            {modeTabs.map((tab) => (
-              <Tab
-                key={tab.name}
-                className={clsx(
-                  "flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium outline-none transition",
-                  "text-brand-11 hover:text-brand-12",
-                  "data-selected:bg-brand-3 data-selected:text-brand-12"
+          <TabList className="flex gap-2">
+            {modeTabs.map((tab, i) => (
+              <Tab as={React.Fragment} key={tab.name}>
+                {({ selected }) => (
+                  <Button {...(selected ? { color: "dark" as const } : { outline: true as const })}>
+                    <tab.icon data-slot="icon" className="h-4 w-4" />
+                    {tab.name}
+                  </Button>
                 )}
-              >
-                <tab.icon className="h-3.5 w-3.5" />
-                {tab.name}
               </Tab>
             ))}
           </TabList>
