@@ -114,14 +114,14 @@ export function FaviconGen() {
         </div>
 
         <TabGroup selectedIndex={modeIndex} onChange={handleModeChange}>
-          <TabList className="flex gap-1 rounded-md bg-brand-2 p-1 w-fit">
+          <TabList className="flex gap-1 rounded-lg bg-white/5 p-1 w-fit">
             {modeTabs.map((tab) => (
               <Tab
                 key={tab.name}
                 className={clsx(
-                  "flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium outline-none transition",
-                  "text-brand-11 hover:text-brand-12",
-                  "data-selected:bg-brand-3 data-selected:text-brand-12"
+                  "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium outline-none transition",
+                  "text-zinc-400 hover:text-white hover:bg-white/5",
+                  "data-selected:bg-white/10 data-selected:text-white"
                 )}
               >
                 <tab.icon className="h-3.5 w-3.5" />
